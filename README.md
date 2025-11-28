@@ -57,7 +57,7 @@
   - [🌊 Real-time Streaming](#-5-real-time-streaming)
   - [📊 Advanced Observability](#-6-advanced-observability)
 - [Fluxos de Processamento](#-fluxos-de-processamento)
-- [Agentes Especializados](#-agentes-especializados)
+- [Specialized Agents](#-specialized-agents)
 - [Installation](#-quick-installation)
 - [How to Use](#-how-to-use)
 - [Dashboard React](#-dashboard-react)
@@ -553,7 +553,7 @@ graph TB
     style Clients fill:#10b981
 ```
 
-**Updates em tempo real:**
+**Real-time Updates:**
 - 🌊 **WebSocket Channels** - 5 canais especializados
 - 📡 **Event Bus** - Pub/sub architecture
 - 🔄 **Stream Processor** - Continuous processing
@@ -622,7 +622,7 @@ graph TB
 **Observability enterprise-grade:**
 - 📊 **13 Prometheus Metrics** - Counters, histograms, gauges
 - 🔍 **Distributed Tracing** - Complete tracing
-- 📝 **Structured Logging** - Logs em JSON
+- 📝 **Structured Logging** - Logs in JSON
 - ❤️ **Health Checks** - Status de todos componentes
 - ⚡ **Performance Monitoring** - Latência por agente
 - 🎯 **Decorators** - Track execution automatically
@@ -945,7 +945,7 @@ graph TD
     end
 ```
 
-**Capacidades:**
+**Capabilities:**
 - 🎓 "20+ years of AML experience" embedded in prompts
 - 🔗 Explicit chain-of-thought reasoning for every decision
 - 🌍 Global regulatory knowledge (FATF, FinCEN, EU, OFAC)
@@ -1752,7 +1752,7 @@ flowchart TB
 ```
 
 **Funcionalidades:**
-- 🔎 Semantic search em todo histórico
+- 🔎 Semantic search across entire history
 - 📊 Similar case lookup
 - 🧠 Pattern recognition
 - 🌐 Cross-reference analysis
@@ -1828,7 +1828,7 @@ graph TB
 | **Risk Aggregation** | 5 | total_risk_flags, composite_risk, amount_risk_score |
 | **TOTAL** | **80+** | **Cobertura completa de todos aspectos** |
 
-**Modelos no Ensemble:**
+**Models in Ensemble:**
 
 1. **Isolation Forest** (Sklearn)
    - 100 estimators
@@ -2004,7 +2004,7 @@ stateDiagram-v2
 ```
 
 **Gera:**
-- 📝 Narrativas em linguagem natural profissional
+- 📝 Narratives in professional natural language
 - 📋 Formato regulatório automático (FinCEN/BSA)
 - 🔗 Conexões lógicas entre evidências
 - ⏰ Timelines detalhadas
@@ -2074,10 +2074,10 @@ graph TB
 
 | Fonte | Entidades | Atualização | Formatos | Programas |
 |-------|-----------|-------------|----------|-----------|
-| 🇺🇸 **OFAC** | ~12,000+ | **1x por dia** | CSV, XML | SDGT, SDNTK, FTO, Iran, Russia, Venezuela |
-| 🌐 **UN** | ~800+ | **1x por dia** | XML, JSON | Al-Qaida, ISIS, Taliban, North Korea |
-| 🇪🇺 **EU** | ~2,000+ | **1x por dia** | XML, CSV | Russia/Ukraine, Belarus, Iran, Syria |
-| **TOTAL** | **~15,000** | **1x por dia** | Consolidado | **Cobertura Global Completa** |
+| 🇺🇸 **OFAC** | ~12,000+ | **1x per day** | CSV, XML | SDGT, SDNTK, FTO, Iran, Russia, Venezuela |
+| 🌐 **UN** | ~800+ | **1x per day** | XML, JSON | Al-Qaida, ISIS, Taliban, North Korea |
+| 🇪🇺 **EU** | ~2,000+ | **1x per day** | XML, CSV | Russia/Ukraine, Belarus, Iran, Syria |
+| **TOTAL** | **~15,000** | **1x per day** | Consolidated | **Complete Global Coverage** |
 
 **Como Funciona:**
 
@@ -2092,8 +2092,8 @@ graph TB
    - Merge e deduplicação
    - Variantes de nomes incluídas
 
-3. **Verificação em Tempo Real**
-   - Cada transação verificada contra as 3 listas
+3. **Real-time Verification**
+   - Each transaction checked against all 3 lists
    - Match em <1ms por nome
    - Fuzzy matching para variações
    - Alerta imediato se match encontrado
@@ -2125,7 +2125,7 @@ transaction = {
 
 **Advantages:**
 
-- 🌍 **Cobertura Global**: 193 países via UN + US + EU
+- 🌍 **Global Coverage**: 193 countries via UN + US + EU
 - ⚡ **Ultra-Rápido**: <1ms por verificação
 - 🔄 **Sempre Atualizado**: Refresh automático 1x/dia
 - 🛡️ **Robusto**: Se uma fonte falhar, outras continuam
@@ -4437,17 +4437,17 @@ sequenceDiagram
 
 ---
 
-## 🤖 Agentes Especializados
+## 🤖 Specialized Agents
 
 
-### Matriz de Capacidades dos Agentes
+### Agent Capabilities Matrix
 
-| Agente | Tipo | Latência | Precisão | Uso de LLM |
-|--------|------|----------|----------|------------|
-| 📥 **Data Ingestion** | Determinístico | < 5ms | 99% | ❌ |
-| 🔍 **Enrichment** | Determinístico | < 10ms | 98% | ❌ |
-| 👤 **Customer Profile** | Determinístico | < 15ms | 95% | ❌ |
-| 📏 **Rules-Based** | Determinístico | < 20ms | 92% | ❌ |
+| Agent | Type | Latency | Precision | LLM Usage |
+|-------|------|---------|-----------|-----------|
+| 📥 **Data Ingestion** | Deterministic | < 5ms | 99% | ❌ |
+| 🔍 **Enrichment** | Deterministic | < 10ms | 98% | ❌ |
+| 👤 **Customer Profile** | Deterministic | < 15ms | 95% | ❌ |
+| 📏 **Rules-Based** | Deterministic | < 20ms | 92% | ❌ |
 | 🤖 **ML Behavioral** | Machine Learning | < 50ms | 88% | ❌ |
 | 🕸️ **Network Analysis** | Graph Algorithm | < 100ms | 85% | ❌ |
 | 🔤 **Semantic NLP** | LLM | 1-2s | 90% | ✅ GPT-3.5 |
@@ -4457,30 +4457,30 @@ sequenceDiagram
 
 ## 🚀 Quick Installation
 
-### Pré-requisitos
+### Prerequisites
 
 ```bash
-# Versões necessárias
+# Required versions
 Python >= 3.10
 Node.js >= 18
-PostgreSQL >= 14 (opcional)
-Redis >= 7 (opcional)
+PostgreSQL >= 14 (optional)
+Redis >= 7 (optional)
 ```
 
-### Setup Automático
+### Automatic Setup
 
 ```bash
-# 1. Clone o repositório
+# 1. Clone the repository
 git clone <repo-url>
 cd nexus-ai
 
-# 2. Execute o script de setup
+# 2. Run the setup script
 chmod +x scripts/setup.sh
 ./scripts/setup.sh
 
 # 3. Configure API Keys
 cp .env.example .env
-nano .env  # Adicione sua OPENAI_API_KEY
+nano .env  # Add your OPENAI_API_KEY
 ```
 
 ### Setup Manual
@@ -5912,22 +5912,22 @@ gantt
     Quantum-ready Crypto :2025-02, 2025-03
 ```
 
-### Possíveis Expansões Futuras
+### Future Roadmap
 
 - 🔄 Kafka integration para high-throughput
 - 🕸️ Neo4j para network analysis avançada  
 - 🌐 Multi-tenancy support
 - 📱 Mobile app (iOS/Android)
 - 🔐 Advanced encryption & privacy
-- 🌍 Multi-language support (50+ idiomas)
+- 🌍 Multi-language support (50+ languages)
 - 📊 Advanced BI dashboards (Power BI, Tableau)
-- 🤝 Federated learning entre instituições
+- 🤝 Federated learning between institutions
 - ⚛️ Quantum-resistant cryptography
 - 🌑 Dark web monitoring integration
 
 ---
 
-## 🔒 Segurança e Compliance
+## 🔒 Security & Compliance
 
 
 ### Security Features
