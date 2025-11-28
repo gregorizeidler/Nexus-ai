@@ -1,0 +1,76 @@
+# Configuration file for AML/CFT rules
+
+# Transaction thresholds (in USD equivalent)
+thresholds:
+  high_value_transaction: 10000
+  structuring_threshold: 9900
+  large_cash_transaction: 5000
+  rapid_transaction_count: 5
+  rapid_transaction_window_minutes: 60
+  
+# Risk scoring weights
+risk_weights:
+  high_value: 0.6
+  structuring: 0.75
+  round_amount: 0.4
+  cross_border: 0.5
+  large_cash: 0.7
+  crypto: 0.5
+  unusual_time: 0.3
+  rapid_sequence: 0.65
+  self_transaction: 0.8
+  
+# Country risk ratings (ISO 3166-1 alpha-2)
+high_risk_countries:
+  - IR  # Iran
+  - KP  # North Korea
+  - SY  # Syria
+  - AF  # Afghanistan
+  - IQ  # Iraq
+  - LY  # Libya
+  - SO  # Somalia
+  - SD  # Sudan
+  - YE  # Yemen
+  - MM  # Myanmar
+  
+# Alert configuration
+alerts:
+  auto_escalate_threshold: 0.85
+  sar_auto_generate_threshold: 0.95
+  consolidation_window_hours: 24
+  retention_days: 365
+  
+# ML model configuration
+ml_models:
+  anomaly_detection:
+    enabled: true
+    threshold: 0.75
+    min_historical_transactions: 10
+    features:
+      - amount
+      - hour_of_day
+      - day_of_week
+      - transaction_frequency
+      - amount_z_score
+      
+  network_analysis:
+    enabled: true
+    layering_threshold: 3
+    circular_threshold_hours: 48
+    smurfing_min_transactions: 5
+    smurfing_time_window_hours: 24
+    
+# Compliance settings
+compliance:
+  regulatory_body: "FinCEN"
+  filing_institution: "Demo Financial Institution"
+  jurisdiction: "US"
+  
+# System settings
+system:
+  parallel_processing: true
+  batch_size: 10
+  max_concurrent_transactions: 100
+  log_level: "INFO"
+  metrics_enabled: true
+

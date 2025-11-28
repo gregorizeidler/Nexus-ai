@@ -1,0 +1,304 @@
+{
+  "dashboard": {
+    "title": "NEXUS AI - Real-time AML Detection Dashboard",
+    "tags": ["nexus-ai", "aml", "ml"],
+    "timezone": "browser",
+    "schemaVersion": 27,
+    "version": 1,
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "🚨 Real-time Suspicious Transactions",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(nexus_suspicious_transactions_total[1m])",
+            "legendFormat": "Suspicious/min",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(nexus_transactions_processed_total[1m])",
+            "legendFormat": "Total/min",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"label": "Transactions/min", "format": "short"},
+          {"label": null, "format": "short"}
+        ]
+      },
+      {
+        "id": 2,
+        "title": "📊 Model Performance Metrics",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 6, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "nexus_model_accuracy",
+            "legendFormat": "Accuracy"
+          },
+          {
+            "expr": "nexus_model_precision",
+            "legendFormat": "Precision"
+          },
+          {
+            "expr": "nexus_model_recall",
+            "legendFormat": "Recall"
+          },
+          {
+            "expr": "nexus_model_f1_score",
+            "legendFormat": "F1-Score"
+          }
+        ],
+        "options": {
+          "graphMode": "area",
+          "colorMode": "value",
+          "orientation": "vertical"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "red", "value": null},
+                {"color": "yellow", "value": 0.7},
+                {"color": "green", "value": 0.85}
+              ]
+            },
+            "mappings": [],
+            "max": 1,
+            "min": 0,
+            "unit": "percentunit"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "⚡ Inference Latency (P50, P95, P99)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 6, "x": 18, "y": 0},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(nexus_inference_duration_seconds_bucket[5m]))",
+            "legendFormat": "P50"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(nexus_inference_duration_seconds_bucket[5m]))",
+            "legendFormat": "P95"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(nexus_inference_duration_seconds_bucket[5m]))",
+            "legendFormat": "P99"
+          }
+        ],
+        "yaxes": [
+          {"label": "Latency", "format": "s"},
+          {"label": null, "format": "short"}
+        ],
+        "alert": {
+          "conditions": [
+            {
+              "evaluator": {"params": [0.1], "type": "gt"},
+              "operator": {"type": "and"},
+              "query": {"params": ["C", "5m", "now"]},
+              "reducer": {"params": [], "type": "avg"},
+              "type": "query"
+            }
+          ],
+          "frequency": "60s",
+          "handler": 1,
+          "name": "High P95 Latency",
+          "noDataState": "no_data",
+          "notifications": []
+        }
+      },
+      {
+        "id": 4,
+        "title": "🎯 Detection by Typology",
+        "type": "piechart",
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
+        "targets": [
+          {
+            "expr": "sum by (typology) (rate(nexus_detections_by_typology_total[5m]))",
+            "legendFormat": "{{typology}}"
+          }
+        ],
+        "options": {
+          "pieType": "donut",
+          "displayLabels": ["name", "percent"]
+        }
+      },
+      {
+        "id": 5,
+        "title": "🌍 Geographic Distribution",
+        "type": "bargauge",
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8},
+        "targets": [
+          {
+            "expr": "topk(10, sum by (country) (rate(nexus_suspicious_by_country_total[10m])))",
+            "legendFormat": "{{country}}"
+          }
+        ],
+        "options": {
+          "displayMode": "gradient",
+          "orientation": "horizontal"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 10},
+                {"color": "red", "value": 50}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 6,
+        "title": "📈 Feature Importance (Live)",
+        "type": "heatmap",
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8},
+        "targets": [
+          {
+            "expr": "nexus_feature_importance",
+            "legendFormat": "{{feature}}"
+          }
+        ],
+        "options": {
+          "color": {
+            "mode": "spectrum"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "⚠️ Alert Volume",
+        "type": "graph",
+        "gridPos": {"h": 6, "w": 12, "x": 0, "y": 16},
+        "targets": [
+          {
+            "expr": "sum by (priority) (rate(nexus_alerts_generated_total[5m]))",
+            "legendFormat": "{{priority}}"
+          }
+        ],
+        "stack": true
+      },
+      {
+        "id": 8,
+        "title": "🔍 Data Drift Score",
+        "type": "gauge",
+        "gridPos": {"h": 6, "w": 6, "x": 12, "y": 16},
+        "targets": [
+          {
+            "expr": "nexus_data_drift_score"
+          }
+        ],
+        "options": {
+          "showThresholdLabels": true,
+          "showThresholdMarkers": true
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 0.2},
+                {"color": "red", "value": 0.3}
+              ]
+            },
+            "max": 1,
+            "min": 0
+          }
+        }
+      },
+      {
+        "id": 9,
+        "title": "💻 System Resources",
+        "type": "graph",
+        "gridPos": {"h": 6, "w": 6, "x": 18, "y": 16},
+        "targets": [
+          {
+            "expr": "nexus_cpu_usage_percent",
+            "legendFormat": "CPU %"
+          },
+          {
+            "expr": "nexus_memory_usage_percent",
+            "legendFormat": "Memory %"
+          },
+          {
+            "expr": "nexus_gpu_utilization_percent",
+            "legendFormat": "GPU %"
+          }
+        ],
+        "yaxes": [
+          {"label": "Usage %", "format": "percent", "max": 100, "min": 0}
+        ]
+      },
+      {
+        "id": 10,
+        "title": "📋 Recent SARs Generated",
+        "type": "table",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 22},
+        "targets": [
+          {
+            "expr": "nexus_sars_generated",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "sar_id": "SAR ID",
+                "customer_id": "Customer",
+                "typology": "Typology",
+                "risk_score": "Risk Score",
+                "timestamp": "Generated At"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "environment",
+          "label": "Environment",
+          "type": "query",
+          "query": "label_values(nexus_transactions_processed_total, environment)",
+          "current": {"text": "production", "value": "production"}
+        },
+        {
+          "name": "model",
+          "label": "Model",
+          "type": "query",
+          "query": "label_values(nexus_model_accuracy, model_name)"
+        }
+      ]
+    },
+    "annotations": {
+      "list": [
+        {
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "ALERTS{alertname=~\".+\", severity=\"critical\"}",
+          "iconColor": "red",
+          "name": "Critical Alerts",
+          "tagKeys": "alertname,severity"
+        }
+      ]
+    }
+  }
+}
+

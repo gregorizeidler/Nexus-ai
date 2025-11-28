@@ -1,0 +1,83 @@
+# Prometheus Configuration for NEXUS AI
+# Monitors all microservices, ML models, and infrastructure
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'nexus-ai-production'
+    environment: 'prod'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+# Load rules
+rule_files:
+  - "alerts/*.yml"
+
+# Scrape configurations
+scrape_configs:
+  # NEXUS AI FastAPI Backend
+  - job_name: 'nexus-api'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # ML Model Inference Metrics
+  - job_name: 'ml-inference'
+    static_configs:
+      - targets: ['localhost:8001']
+    metrics_path: '/metrics'
+    scrape_interval: 5s  # Faster for real-time ML
+    
+  # Kafka Metrics
+  - job_name: 'kafka'
+    static_configs:
+      - targets: ['kafka:9092']
+    metrics_path: '/metrics'
+    
+  # Neo4j Graph Database
+  - job_name: 'neo4j'
+    static_configs:
+      - targets: ['neo4j:2004']
+    metrics_path: '/metrics'
+    
+  # ClickHouse Analytics
+  - job_name: 'clickhouse'
+    static_configs:
+      - targets: ['clickhouse:9363']
+      
+  # MLflow Tracking Server
+  - job_name: 'mlflow'
+    static_configs:
+      - targets: ['mlflow:5000']
+      
+  # Node Exporter (System Metrics)
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+      
+  # cAdvisor (Container Metrics)
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+      
+  # Custom Application Metrics
+  - job_name: 'nexus-custom'
+    static_configs:
+      - targets: ['localhost:9090']
+    metrics_path: '/nexus/metrics'
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'nexus_.*'
+        action: keep
+
+# Remote write (optional - for long-term storage)
+# remote_write:
+#   - url: "https://prometheus-remote-storage/api/v1/write"
+

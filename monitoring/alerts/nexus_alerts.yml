@@ -1,0 +1,152 @@
+# Prometheus Alert Rules for NEXUS AI
+groups:
+  - name: nexus_ai_alerts
+    interval: 30s
+    rules:
+      # Model Performance Alerts
+      - alert: ModelAccuracyDrop
+        expr: nexus_model_accuracy < 0.85
+        for: 5m
+        labels:
+          severity: critical
+          component: ml_model
+        annotations:
+          summary: "Model accuracy dropped below 85%"
+          description: "Model {{ $labels.model_name }} accuracy is {{ $value | humanizePercentage }}"
+          
+      - alert: HighFalsePositiveRate
+        expr: nexus_false_positive_rate > 0.15
+        for: 10m
+        labels:
+          severity: warning
+          component: ml_model
+        annotations:
+          summary: "False positive rate too high"
+          description: "FP rate is {{ $value | humanizePercentage }} for {{ $labels.model_name }}"
+          
+      # Inference Latency Alerts
+      - alert: HighInferenceLatency
+        expr: histogram_quantile(0.95, rate(nexus_inference_duration_seconds_bucket[5m])) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          component: inference
+        annotations:
+          summary: "95th percentile inference latency > 100ms"
+          description: "P95 latency is {{ $value | humanizeDuration }}"
+          
+      - alert: VeryHighInferenceLatency
+        expr: histogram_quantile(0.99, rate(nexus_inference_duration_seconds_bucket[5m])) > 0.5
+        for: 3m
+        labels:
+          severity: critical
+          component: inference
+        annotations:
+          summary: "99th percentile inference latency > 500ms"
+          description: "P99 latency is {{ $value | humanizeDuration }} - investigate immediately"
+          
+      # Data Quality Alerts
+      - alert: DataDriftDetected
+        expr: nexus_data_drift_score > 0.3
+        for: 15m
+        labels:
+          severity: warning
+          component: data_quality
+        annotations:
+          summary: "Significant data drift detected"
+          description: "Drift score: {{ $value }} - model may need retraining"
+          
+      - alert: MissingFeatures
+        expr: rate(nexus_missing_features_total[5m]) > 0.01
+        for: 10m
+        labels:
+          severity: warning
+          component: data_quality
+        annotations:
+          summary: "High rate of missing features"
+          description: "{{ $value | humanize }} missing feature events per second"
+          
+      # System Health Alerts
+      - alert: APIHighErrorRate
+        expr: rate(nexus_api_errors_total[5m]) / rate(nexus_api_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+          component: api
+        annotations:
+          summary: "API error rate above 5%"
+          description: "Error rate: {{ $value | humanizePercentage }}"
+          
+      - alert: KafkaConsumerLag
+        expr: nexus_kafka_consumer_lag > 1000
+        for: 10m
+        labels:
+          severity: warning
+          component: kafka
+        annotations:
+          summary: "Kafka consumer lagging behind"
+          description: "Lag: {{ $value }} messages on {{ $labels.topic }}"
+          
+      # Resource Alerts
+      - alert: HighMemoryUsage
+        expr: (nexus_memory_usage_bytes / nexus_memory_total_bytes) > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "Memory usage above 90%"
+          description: "Memory: {{ $value | humanizePercentage }} on {{ $labels.instance }}"
+          
+      - alert: HighCPUUsage
+        expr: rate(nexus_cpu_usage_seconds_total[5m]) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "CPU usage above 80%"
+          description: "CPU: {{ $value | humanizePercentage }} on {{ $labels.instance }}"
+          
+      # Business Metrics Alerts
+      - alert: SuspiciousTransactionSpike
+        expr: rate(nexus_suspicious_transactions_total[5m]) > nexus_suspicious_transactions_baseline * 2
+        for: 5m
+        labels:
+          severity: warning
+          component: business
+        annotations:
+          summary: "Unusual spike in suspicious transactions"
+          description: "Current rate is 2x baseline - possible attack or data issue"
+          
+      - alert: NoTransactionsProcessed
+        expr: rate(nexus_transactions_processed_total[10m]) == 0
+        for: 5m
+        labels:
+          severity: critical
+          component: business
+        annotations:
+          summary: "No transactions being processed"
+          description: "Pipeline may be down - investigate immediately"
+          
+      # ML Pipeline Alerts
+      - alert: ModelNotUpdated
+        expr: (time() - nexus_model_last_training_timestamp) > 604800
+        for: 1h
+        labels:
+          severity: warning
+          component: ml_ops
+        annotations:
+          summary: "Model hasn't been retrained in 7 days"
+          description: "Last training: {{ $value | humanizeDuration }} ago"
+          
+      - alert: TrainingJobFailed
+        expr: nexus_training_job_status{status="failed"} > 0
+        for: 1m
+        labels:
+          severity: critical
+          component: ml_ops
+        annotations:
+          summary: "Model training job failed"
+          description: "Job {{ $labels.job_id }} failed - check logs"
+
