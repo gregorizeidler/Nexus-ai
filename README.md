@@ -15,6 +15,9 @@
 ╚═══════════════════════════════════════════════════════════════╝
 </pre>
 
+> 🚧 **PROJECT UNDER ACTIVE DEVELOPMENT** 🚧  
+> This project is currently **IN CONSTRUCTION** and **NOT FINALIZED**. Features, APIs, and documentation may change without notice.
+
 ### Enterprise-Grade AI Platform for Anti-Money Laundering & Counter-Terrorism Financing
 
 **NEXUS AI combines cutting-edge machine learning, graph analytics, and large language models to detect financial crimes with unprecedented accuracy and efficiency. Built on a multi-agent architecture, it processes millions of transactions in real-time, identifies complex laundering schemes through network analysis, and generates regulatory-compliant SARs automatically.**
