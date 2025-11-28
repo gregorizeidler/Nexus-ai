@@ -480,7 +480,7 @@ graph TB
     end
 
     subgraph "Output"
-        R --> SCORE[Risk Score (0-100)]
+        R --> SCORE["Risk Score (0-100)"]
         R --> FLAGS[Risk Flags]
         R --> GRAPH[Visual Graph Data]
     end
@@ -911,26 +911,38 @@ python src/monitoring/prometheus_metrics.py
 ### 🧠 10. LLM Orchestrator Agent (GPT-4)
 
 ```mermaid
-%%{init: {'theme':'dark'}}%%
-mindmap
-  root((🧠 LLM<br/>Orchestrator))
-    Chain of Thought
-      Step-by-step reasoning
-      Contextual analysis
-      Expert-level insights
-    Multi-Agent Synthesis
-      Aggregates findings
-      Resolves conflicts
-      Prioritizes risks
-    Regulatory Knowledge
-      FATF Guidelines
-      FinCEN Rules
-      OFAC Standards
-      Local Laws
-    Adaptive Learning
-      Feedback integration
-      Pattern evolution
-      Dynamic thresholds
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#3b82f6','secondaryColor':'#8b5cf6','tertiaryColor':'#10b981'}}}%%
+graph TD
+    subgraph "AI ORCHESTRATION LAYER"
+        ORCH((🧠 LLM ORCHESTRATOR<br/>GPT-4))
+        style ORCH fill:#8b5cf6,stroke:#fff,stroke-width:4px,color:#fff
+    end
+
+    subgraph "INPUT & ANALYSIS"
+        TASK[🚨 Suspicious Activity] --> ORCH
+        ORCH -->|Step 1: Delegate| AGENTS{Specialized Agents}
+        
+        AGENTS -->|Analyze| RULES[📏 Rules Engine]
+        AGENTS -->|Detect| ML[🤖 ML Models]
+        AGENTS -->|Trace| GRAPH[🕸️ Graph Network]
+        AGENTS -->|Check| SANCTIONS[🌍 Sanctions]
+        
+        style RULES fill:#3b82f6
+        style ML fill:#3b82f6
+        style GRAPH fill:#3b82f6
+        style SANCTIONS fill:#3b82f6
+    end
+
+    subgraph "SYNTHESIS & DECISION"
+        RULES & ML & GRAPH & SANCTIONS -->|Step 2: Insights| ORCH
+        ORCH -->|Step 3: Synthesize| DECISION{Decision?}
+        
+        DECISION -->|High Risk| SAR[📝 Generate SAR]
+        DECISION -->|Low Risk| DISMISS[✅ Dismiss Alert]
+        
+        style SAR fill:#ef4444,stroke:#fff,stroke-width:2px
+        style DISMISS fill:#10b981,stroke:#fff,stroke-width:2px
+    end
 ```
 
 **Capacidades:**
@@ -3352,7 +3364,7 @@ graph TB
     subgraph "Query Layer"
         H[Dashboard<br/>Real-time] -->|SQL Query| I[Query Optimizer]
         J[Analyst<br/>Ad-hoc] -->|SQL Query| I
-        K[ML Pipeline<br/>Feature Extraction| -->|SQL Query| I
+        K[ML Pipeline<br/>Feature Extraction] -->|SQL Query| I
         I -->|< 1s response| F
         I -->|< 1s response| G
     end
