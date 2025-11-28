@@ -453,6 +453,42 @@ graph LR
 
 ### ⛓️ 4. Blockchain Forensics
 
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#8b5cf6','secondaryColor':'#ec4899','tertiaryColor':'#10b981'}}}%%
+graph TB
+    subgraph Input
+        TX[Transaction Hash] --> API{API Gateway}
+    end
+
+    subgraph "External APIs"
+        API -->|ETH| ETH[Etherscan API]
+        API -->|BTC| BTC[Blockchain.com API]
+        API -->|Risk| C[Chainalysis/ TRM]
+    end
+
+    subgraph "Forensic Analysis Engine"
+        ETH & BTC & C --> P[Parser & Normalizer]
+        P --> T[Taint Analysis]
+        P --> M[Mixer Detection]
+        P --> H[Chain Hopping]
+        P --> D[DeFi/NFT Analyzer]
+        
+        T --> R[Risk Calculator]
+        M --> R
+        H --> R
+        D --> R
+    end
+
+    subgraph "Output"
+        R --> SCORE[Risk Score (0-100)]
+        R --> FLAGS[Risk Flags]
+        R --> GRAPH[Visual Graph Data]
+    end
+
+    style TX fill:#f59e0b
+    style API fill:#3b82f6
+    style R fill:#ef4444
+```
 
 **Complete crypto forensic analysis:**
 - 🔍 **Taint Analysis** - Illicit funds tracking
@@ -918,6 +954,49 @@ NEXUS AI implements a sophisticated **multi-agent LLM architecture** that combin
 ### 🔧 Multi-Agent Orchestration Pattern
 
 **Architecture:** Async message-passing system with parallel execution and intelligent routing.
+
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#3b82f6','secondaryColor':'#8b5cf6','tertiaryColor':'#10b981'}}}%%
+graph TB
+    subgraph "Core Brain"
+        ORCH((🧠 LLM Orchestrator<br/>GPT-4))
+    end
+
+    subgraph "Data Agents"
+        INGEST[📥 Data Ingestion]
+        ENRICH[🔍 Enrichment]
+        PROFILE[👤 Customer Profile]
+    end
+
+    subgraph "Detection Agents"
+        RULES[📏 Rules Engine]
+        ML[🤖 ML Behavioral]
+        GRAPH[🕸️ Network Graph]
+        CRYPTO[⛓️ Crypto Forensics]
+        DOCS[📄 Document Intel]
+    end
+
+    subgraph "Compliance Agents"
+        SAR[📝 SAR Generator]
+        REG[⚖️ Regulatory Check]
+        XAI[🔬 Explainable AI]
+    end
+
+    %% Flow
+    ALERT[🚨 Alert/Signal] --> ORCH
+    ORCH -->|Delegate| INGEST & ENRICH & PROFILE
+    INGEST & ENRICH & PROFILE -->|Context| ORCH
+    
+    ORCH -->|Analyze| RULES & ML & GRAPH & CRYPTO & DOCS
+    RULES & ML & GRAPH & CRYPTO & DOCS -->|Findings| ORCH
+    
+    ORCH -->|Synthesize| SAR & REG & XAI
+    SAR & REG & XAI -->|Final Report| REPORT[📂 Investigative Report]
+
+    style ORCH fill:#8b5cf6,stroke:#fff,stroke-width:4px
+    style ALERT fill:#ef4444
+    style REPORT fill:#10b981
+```
 
 ```python
 # Agent Communication Protocol

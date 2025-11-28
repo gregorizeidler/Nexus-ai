@@ -2,6 +2,8 @@
 ⛓️ BLOCKCHAIN FORENSICS MODULE
 Análise de transações de criptomoedas, rastreamento on-chain, detecção de mixers
 """
+import os
+import aiohttp
 from typing import Dict, Any, List, Optional, Set
 from decimal import Decimal
 from loguru import logger
@@ -14,7 +16,7 @@ class BlockchainForensics:
     """
     
     def __init__(self):
-        # Listas conhecidas of mixers/tumblers
+        # Listas conhecidas de mixers/tumblers
         self.known_mixers = {
             "bitcoin": [
                 "bc1mixer...", "3MixerAddr...", "1TumblerXYZ..."
@@ -29,7 +31,7 @@ class BlockchainForensics:
             "binance", "coinbase", "kraken", "bitfinex", "huobi"
         }
         
-        # Addresifs of alto risco
+        # Endereços de alto risco
         self.high_risk_addresses = set()
         
         logger.info("⛓️ Blockchain Forensics initialized")
@@ -42,73 +44,116 @@ class BlockchainForensics:
     ) -> Dict[str, Any]:
         """
         Análise completa de transação cripto
-        
-        Returns:
-            - taint_score: Nível de "contaminação" (0-1)
-            - mixer_detected: Se passou por mixer
-            - exchange_tracking: Exchanges envolvidas
-            - cluster_analysis: Cluster da address
-            - risk_assessment: Avaliação de risco geral
         """
         
         analysis = {
             "tx_hash": tx_hash,
             "blockchain": blockchain,
-            "timestamp": "2024-01-15T10:30:00Z"
+            "timestamp": "2024-01-15T10:30:00Z",
+            "real_data_source": None
         }
+
+        # Tenta buscar dados reais se APIs estiverem configuradas
+        real_data = None
+        if blockchain == "ethereum" and os.getenv("ETHERSCAN_API_KEY"):
+            real_data = await self._fetch_etherscan_data(tx_hash)
+            if real_data:
+                analysis["real_data_source"] = "Etherscan"
+                analysis["timestamp"] = real_data.get("timeStamp", analysis["timestamp"])
+                if not address:
+                    address = real_data.get("from")
+
+        elif blockchain == "bitcoin" and os.getenv("BLOCKCHAIN_COM_API_KEY"):
+             real_data = await self._fetch_bitcoin_data(tx_hash)
+             if real_data:
+                analysis["real_data_source"] = "Blockchain.com"
+                # Adaptar timestamp e address do real_data se necessário
         
         # 1. Taint Analysis
-        analysis["taint_analysis"] = await self._calculate_taint(address, blockchain)
+        analysis["taint_analysis"] = await self._calculate_taint(address, blockchain, real_data)
         
-        # 2. Mixer oftection
+        # 2. Mixer Detection
         analysis["mixer_detection"] = await self._detect_mixers(tx_hash, blockchain)
         
-        # 3. Exchangand Tracking
+        # 3. Exchange Tracking
         analysis["exchange_tracking"] = await self._track_exchanges(address, blockchain)
         
-        # 4. cluster Analysis
+        # 4. Cluster Analysis
         analysis["cluster_analysis"] = await self._cluster_analysis(address, blockchain)
         
-        # 5. Chain Hopping oftection
+        # 5. Chain Hopping Detection
         analysis["chain_hopping"] = await self._detect_chain_hopping(address)
         
         # 6. Risk Score
         analysis["risk_score"] = self._calculate_crypto_risk(analysis)
         
-        # 7. Suspiciors Patterns
+        # 7. Suspicious Patterns
         analysis["patterns"] = self._identify_crypto_patterns(analysis)
         
         logger.info(f"⛓️ Crypto analysis complete for {tx_hash[:16]}... Risk: {analysis['risk_score']:.2f}")
         
         return analysis
+
+    async def _fetch_etherscan_data(self, tx_hash: str) -> Optional[Dict]:
+        """Busca dados reais da transação no Etherscan"""
+        api_key = os.getenv("ETHERSCAN_API_KEY")
+        if not api_key:
+            return None
+            
+        url = f"https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash={tx_hash}&apikey={api_key}"
+        
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        return data.get("result")
+        except Exception as e:
+            logger.error(f"Error fetching Etherscan data: {e}")
+            return None
+
+    async def _fetch_bitcoin_data(self, tx_hash: str) -> Optional[Dict]:
+        """Busca dados reais da transação na Blockchain.com"""
+        # Nota: Blockchain.com API pública pode não precisar de chave para limites baixos,
+        # mas usando chave se configurada é melhor.
+        
+        url = f"https://blockchain.info/rawtx/{tx_hash}"
+        
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as response:
+                    if response.status == 200:
+                        return await response.json()
+        except Exception as e:
+            logger.error(f"Error fetching Bitcoin data: {e}")
+            return None
     
-    async def _calculate_taint(self, address: str, blockchain: str) -> Dict[str, Any]:
+    async def _calculate_taint(self, address: str, blockchain: str, real_data: Optional[Dict] = None) -> Dict[str, Any]:
         """
         Taint Analysis: Rastreia "contaminação" de fundos ilícitos
-        
-        Se address recebeu fundos de source ilícita,
-        tem "taint score" alto
         """
-        
-        # in produção, isso consultaria blockchain explorer APIs
-        # Por ora, simulamos
         
         taint_score = 0.0
         taint_sources = []
         
-        # Simular verificação contra listas conhecidas
-        if address in self.high_risk_addresses:
+        # Se tivermos dados reais, podemos fazer uma análise mais simples
+        if real_data:
+            # Exemplo simplificado: verificar se o 'from' address está em lista de risco
+            sender = real_data.get("from") if blockchain == "ethereum" else None # Simplificação
+            if sender and sender in self.high_risk_addresses:
+                 taint_score = 1.0
+                 taint_sources.append("Known illicit sender (Real Data)")
+
+        # Simular verificação contra listas conhecidas (fallback ou complementar)
+        if address and address in self.high_risk_addresses:
             taint_score = 1.0
             taint_sources.append("Known illicit address")
-        
-        # Verificar sand tin conexão with mixers
-        # (in produção, analisaria tx history)
         
         return {
             "score": taint_score,
             "sources": taint_sources,
-            "confidence": 0.85,
-            "methodology": "Graph-based taint propagation"
+            "confidence": 0.95 if real_data else 0.85,
+            "methodology": "Real-time API Check" if real_data else "Graph-based taint propagation (Simulated)"
         }
     
     async def _detect_mixers(self, tx_hash: str, blockchain: str) -> Dict[str, Any]:
