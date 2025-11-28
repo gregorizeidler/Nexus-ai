@@ -3561,13 +3561,13 @@ graph LR
 stateDiagram-v2
     [*] --> ReceiveAlert: New High-Risk Alert
     
-    ReceiveAlert --> ContextGathering: Agent 1: Context Collector
+    ReceiveAlert --> ContextGathering: Context Collector
     
-    ContextGathering --> MultiAgentAnalysis: Gather Transaction History<br/>Customer Profile<br/>Network Connections
+    ContextGathering --> MultiAgentAnalysis: Gather Context
     
-    MultiAgentAnalysis --> Agent2_RiskScorer: Agent 2: Risk Scorer
-    MultiAgentAnalysis --> Agent3_Typologist: Agent 3: Typology Detector
-    MultiAgentAnalysis --> Agent4_Sanctions: Agent 4: Sanctions Checker
+    MultiAgentAnalysis --> Agent2_RiskScorer: Risk Scorer
+    MultiAgentAnalysis --> Agent3_Typologist: Typology Detector
+    MultiAgentAnalysis --> Agent4_Sanctions: Sanctions Checker
     
     Agent2_RiskScorer --> DebateOrchestration
     Agent3_Typologist --> DebateOrchestration
@@ -3575,13 +3575,13 @@ stateDiagram-v2
     
     DebateOrchestration --> ConsensusCheck: 4 LLMs Debate
     
-    ConsensusCheck --> GenerateSAR: Consensus Reached<br/>(3+ agree)
-    ConsensusCheck --> HumanReview: No Consensus<br/>(2-2 split)
+    ConsensusCheck --> GenerateSAR: Consensus Reached
+    ConsensusCheck --> HumanReview: No Consensus
     
-    GenerateSAR --> QualityCheck: Agent 5: SAR Writer
+    GenerateSAR --> QualityCheck: SAR Writer
     
-    QualityCheck --> ApprovalQueue: Quality Score > 0.9
-    QualityCheck --> Refinement: Quality Score < 0.9
+    QualityCheck --> ApprovalQueue: Quality OK
+    QualityCheck --> Refinement: Needs Improvement
     
     Refinement --> GenerateSAR: Improve Narrative
     
@@ -3597,10 +3597,10 @@ stateDiagram-v2
     end note
     
     note right of DebateOrchestration
-        Each agent provides:
-        - Risk assessment
-        - Confidence score
-        - Supporting evidence
+        Each agent provides
+        Risk assessment
+        Confidence score
+        Supporting evidence
     end note
 ```
 
