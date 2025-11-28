@@ -450,35 +450,6 @@ graph LR
 
 ### ⛓️ 4. Blockchain Forensics
 
-```mermaid
-%%{init: {'theme':'dark'}}%%
-mindmap
-  root((⛓️ Blockchain<br/>Forensics))
-    Bitcoin Analysis
-      Taint Analysis
-      Mixer Detection
-        CoinJoin
-        Wasabi Wallet
-      Cluster Analysis
-      UTXO Tracking
-    Ethereum & DeFi
-      Smart Contract Analysis
-      DeFi Protocols
-        Uniswap
-        Aave
-        Compound
-      Flash Loan Detection
-      MEV Abuse
-    NFT Analysis
-      Wash Trading
-      Price Manipulation
-      Circular Trading
-      Floor Price Analysis
-    Cross-chain
-      Chain Hopping
-      Bridge Analysis
-      Wrapped Assets
-```
 
 **Complete crypto forensic analysis:**
 - 🔍 **Taint Analysis** - Illicit funds tracking
@@ -4374,56 +4345,6 @@ sequenceDiagram
 
 ## 🤖 Agentes Especializados
 
-### Agents Overview
-
-```mermaid
-%%{init: {'theme':'dark'}}%%
-mindmap
-  root((🎯 Agent<br/>Ecosystem))
-    Ingestion Layer
-      📥 Data Ingestion Agent
-        Validation
-        Normalization
-        Multi-format support
-      🔍 Enrichment Agent
-        Geo data
-        Sanctions check
-        PEP verification
-      👤 Customer Profile Agent
-        KYC data
-        Historical patterns
-        Risk rating
-    Analysis Layer
-      📏 Rules-Based Agent
-        FATF compliance
-        Threshold checks
-        Pattern matching
-      🤖 ML Behavioral Agent
-        Anomaly detection
-        Behavioral profiling
-        Deviation analysis
-      🕸️ Network Analysis Agent
-        Graph analysis
-        Layering detection
-        Community detection
-      🔤 Semantic Analyzer Agent
-        NLP analysis
-        Sentiment detection
-        Language patterns
-    Intelligence Layer
-      🧠 LLM Orchestrator Agent
-        Master coordinator
-        Chain-of-thought
-        Synthesis
-      💬 Chatbot Agent
-        Q&A
-        Investigation support
-        Guidance
-      📄 Document Intel Agent
-        Vision AI
-        OCR
-        Fraud detection
-```
 
 ### Matriz de Capacidades dos Agentes
 
@@ -5914,39 +5835,6 @@ gantt
 
 ## 🔒 Segurança e Compliance
 
-### Regulamentações Suportadas
-
-```mermaid
-%%{init: {'theme':'dark'}}%%
-mindmap
-  root((⚖️ Compliance))
-    International
-      FATF
-        40 Recommendations
-        Risk-based approach
-        Beneficial ownership
-      Basel Committee
-        KYC standards
-        CDD requirements
-    Regional
-      US
-        FinCEN
-        BSA/AML
-        OFAC
-        USA PATRIOT Act
-      EU
-        6AMLD
-        MLD5
-        GDPR
-      UK
-        MLR 2017
-        FCA Guidelines
-    Data Protection
-      GDPR
-      LGPD
-      CCPA
-      Privacy by Design
-```
 
 ### Security Features
 
@@ -6045,56 +5933,9 @@ Este projeto é proprietário. Uso não autorizado é proibido.
 - ⚡ **[ClickHouse](http://localhost:8123)** - Analytics
 - 📦 **[MLflow](http://localhost:5000)** - Model tracking
 
-### Contato
-
-- 💬 Issues: [Abrir Issue](../../issues)
-- 📧 Email: support@nexus-ai.io
-- 🌐 Website: https://nexus-ai.io
-- 📖 Docs: https://docs.nexus-ai.io
-
----
-
 <div align="center">
 
-### ⭐ Star o projeto se você achou útil!
-
-**🔷 NEXUS AI** - The Center of AML Intelligence
-
-![Status](https://img.shields.io/badge/Status-✅_Production_Ready-brightgreen?style=for-the-badge)
-![Implementation](https://img.shields.io/badge/Implementation-100%25_Complete-success?style=for-the-badge)
-![Features](https://img.shields.io/badge/Features-50+-blue?style=for-the-badge)
-![Agents](https://img.shields.io/badge/AI_Agents-18+-purple?style=for-the-badge)
-![Files](https://img.shields.io/badge/Files-82+-orange?style=for-the-badge)
-![LOC](https://img.shields.io/badge/Lines_of_Code-35K+-red?style=for-the-badge)
-![Accuracy](https://img.shields.io/badge/ML_Models-Ensemble_GBDT-green?style=for-the-badge)
-![Throughput](https://img.shields.io/badge/Throughput-5K_TPS-cyan?style=for-the-badge)
-
-[![Made with ❤️](https://img.shields.io/badge/Made%20with-❤️-red.svg)](https://github.com/yourusername/nexus-ai)
-[![Powered by AI](https://img.shields.io/badge/Powered%20by-AI-blue.svg)](https://openai.com)
-[![GPT-4](https://img.shields.io/badge/GPT--4-Turbo-412991.svg)](https://openai.com)
-
-</div>
-
----
-
-## ⚠️ Aviso Legal
-
-**IMPORTANTE**: Este sistema processa dados financeiros sensíveis. Certifique-se de:
-
-- ✅ Seguir todas as regulamentações locais e internacionais
-- ✅ Implementar controles de acesso adequados
-- ✅ Criptografar dados sensíveis
-- ✅ Realizar auditorias regulares
-- ✅ Treinar a equipe em compliance
-- ✅ Manter logs de auditoria completos
-
-O uso inadequado deste sistema pode resultar em violações regulatórias sérias.
-
----
-
-<div align="center">
-
-**© 2024 NEXUS AI. All rights reserved.**
+**© 2025 NEXUS AI. All rights reserved.**
 
 *Protecting the financial system with AI.*
 
