@@ -54,9 +54,9 @@ export default function Dashboard() {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="relative">
-          <div className="w-16 h-16 rounded-full border-4 border-blue-500/30 border-t-blue-500 animate-spin"></div>
+          <div className="w-16 h-16 rounded-full border-4 border-blue-200 border-t-blue-600 animate-spin"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
           </div>
         </div>
       </div>
@@ -101,11 +101,11 @@ export default function Dashboard() {
       {
         data: Object.values(metrics?.alerts.by_status || {}),
         backgroundColor: [
-          'rgba(59, 130, 246, 0.6)',
-          'rgba(139, 92, 246, 0.6)',
-          'rgba(16, 185, 129, 0.6)',
+          'rgba(37, 99, 235, 0.8)',
+          'rgba(124, 58, 237, 0.8)',
+          'rgba(16, 185, 129, 0.8)',
         ],
-        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderColor: 'rgba(255, 255, 255, 0.9)',
         borderWidth: 1,
       },
     ],
@@ -116,18 +116,18 @@ export default function Dashboard() {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        labels: { color: '#94a3b8', font: { family: 'Inter' } },
+        labels: { color: '#64748b', font: { family: 'Inter', size: 12 } },
         position: 'bottom',
       },
     },
     scales: {
       y: {
-        ticks: { color: '#64748b' },
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+        ticks: { color: '#64748b', font: { size: 11 } },
+        grid: { color: '#e2e8f0', borderDash: [5, 5] },
         border: { display: false },
       },
       x: {
-        ticks: { color: '#64748b' },
+        ticks: { color: '#64748b', font: { size: 11 } },
         grid: { display: false },
         border: { display: false },
       },
@@ -135,23 +135,23 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-white tracking-tight mb-2 neon-text-blue">
-            Command Center
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-1">
+            Dashboard
           </h1>
-          <p className="text-slate-400 text-lg">
+          <p className="text-slate-600 text-sm">
             Real-time AML forensic analysis & monitoring
           </p>
         </div>
         <div className="flex gap-3">
           <button className="btn-secondary">
-            <span>📅 Last 24h</span>
+            <span>Last 24h</span>
           </button>
           <button className="btn-primary">
-            <span>⚡ Live Stream</span>
+            <span>Live Stream</span>
           </button>
         </div>
       </div>
@@ -195,7 +195,7 @@ export default function Dashboard() {
           color="text-green-400"
           bgGradient="from-green-500/20 to-emerald-500/5"
           trend="Stable"
-          trendUp={true}
+          trendUp={undefined}
           delay={0.4}
         />
       </div>
@@ -205,10 +205,10 @@ export default function Dashboard() {
         {/* Main Chart - Spans 2 columns */}
         <GlassCard className="lg:col-span-2" delay={0.5}>
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-white">Risk Level Distribution</h3>
-            <div className="flex gap-2">
-              <span className="w-2 h-2 rounded-full bg-red-500"></span>
-              <span className="text-xs text-slate-400">Live Updates</span>
+            <h3 className="text-lg font-semibold text-slate-900">Risk Level Distribution</h3>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span className="text-xs text-slate-600">Live Updates</span>
             </div>
           </div>
           <div className="h-80">
@@ -218,7 +218,7 @@ export default function Dashboard() {
 
         {/* Secondary Chart */}
         <GlassCard delay={0.6}>
-          <h3 className="text-lg font-semibold text-white mb-6">Alert Status</h3>
+          <h3 className="text-lg font-semibold text-slate-900 mb-6">Alert Status</h3>
           <div className="h-64 flex items-center justify-center">
             <Doughnut 
               data={statusData} 
@@ -231,11 +231,11 @@ export default function Dashboard() {
           </div>
           <div className="mt-6 grid grid-cols-3 gap-2 text-center">
             {Object.entries(metrics?.alerts.by_status || {}).slice(0, 3).map(([status, count]) => (
-              <div key={status} className="p-2 rounded-lg bg-white/5">
-                <div className="text-xs text-slate-400 mb-1 capitalize">
+              <div key={status} className="p-2 rounded-lg bg-slate-50 border border-slate-200">
+                <div className="text-xs text-slate-600 mb-1 capitalize">
                   {status.split('_')[0]}
                 </div>
-                <div className="text-lg font-bold text-white">{count as number}</div>
+                <div className="text-lg font-bold text-slate-900">{count as number}</div>
               </div>
             ))}
           </div>
@@ -244,14 +244,14 @@ export default function Dashboard() {
 
       {/* High Priority Alerts Table */}
       <GlassCard delay={0.7} noHover className="overflow-hidden p-0">
-        <div className="px-6 py-5 border-b border-white/5 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-white">High-Priority Intelligence</h3>
-          <button className="text-xs text-blue-400 hover:text-blue-300 font-medium">
+        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+          <h3 className="text-lg font-semibold text-slate-900">High-Priority Alerts</h3>
+          <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
             View All Alerts →
           </button>
         </div>
         
-        <div className="divide-y divide-white/5">
+        <div className="divide-y divide-slate-200">
           {alerts
             ?.filter(a => a.risk_level === 'high' || a.risk_level === 'critical')
             .slice(0, 5)
@@ -261,30 +261,30 @@ export default function Dashboard() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.8 + (i * 0.1) }}
-                className="px-6 py-4 hover:bg-white/5 transition-colors cursor-pointer group"
+                className="px-6 py-4 hover:bg-slate-50 transition-colors cursor-pointer group"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3">
                       <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wide
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide
                           ${alert.risk_level === 'critical' 
-                            ? 'bg-red-500/10 text-red-400 border border-red-500/20 shadow-[0_0_10px_rgba(239,68,68,0.2)]' 
-                            : 'bg-orange-500/10 text-orange-400 border border-orange-500/20'
+                            ? 'bg-red-100 text-red-700 border border-red-200' 
+                            : 'bg-orange-100 text-orange-700 border border-orange-200'
                           }`}
                       >
                         {alert.risk_level.toUpperCase()}
                       </span>
-                      <span className="text-sm font-medium text-slate-200 group-hover:text-white transition-colors">
+                      <span className="text-sm font-medium text-slate-900 group-hover:text-blue-600 transition-colors">
                         {alert.alert_type.replace(/_/g, ' ')}
                       </span>
                     </div>
                     <p className="mt-1 text-xs text-slate-500 font-mono">
-                      ID: <span className="text-slate-400">{alert.alert_id}</span>
+                      ID: <span className="text-slate-700">{alert.alert_id}</span>
                     </p>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">
+                    <div className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       Risk: {(alert.priority_score * 100).toFixed(0)}%
                     </div>
                     <div className="text-xs text-slate-500">
@@ -296,10 +296,10 @@ export default function Dashboard() {
             ))}
           {(!alerts || alerts.filter(a => a.risk_level === 'high' || a.risk_level === 'critical').length === 0) && (
             <div className="px-6 py-12 text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/10 mb-3">
-                <CheckCircleIcon className="w-6 h-6 text-green-500" />
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-100 mb-3">
+                <CheckCircleIcon className="w-6 h-6 text-green-600" />
               </div>
-              <p className="text-slate-400">No critical threats detected</p>
+              <p className="text-slate-600">No critical threats detected</p>
             </div>
           )}
         </div>

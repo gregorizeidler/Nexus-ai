@@ -27,13 +27,13 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex">
       {/* Sidebar for Desktop */}
-      <aside className="hidden md:flex w-64 flex-col fixed inset-y-0 bg-[#0B0F19]/80 backdrop-blur-xl border-r border-white/5 z-50">
-        <div className="flex items-center h-16 px-6 border-b border-white/5">
+      <aside className="hidden md:flex w-64 flex-col fixed inset-y-0 bg-white border-r border-slate-200 z-50 shadow-sm">
+        <div className="flex items-center h-16 px-6 border-b border-slate-200">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
               <span className="text-white font-bold text-lg">N</span>
             </div>
-            <span className="text-lg font-bold text-white tracking-tight">NEXUS AI</span>
+            <span className="text-lg font-bold text-slate-900 tracking-tight">NEXUS AI</span>
           </Link>
         </div>
 
@@ -67,28 +67,27 @@ export default function Layout() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/5">
-          <div className="glass-card p-3 flex items-center gap-3">
+        <div className="p-4 border-t border-slate-200">
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 flex items-center gap-3">
             <div className="relative">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <div className="absolute inset-0 w-2 h-2 rounded-full bg-green-500 animate-ping opacity-75" />
+              <div className="w-2 h-2 rounded-full bg-green-500" />
             </div>
             <div>
-              <p className="text-xs font-medium text-slate-400">System Status</p>
-              <p className="text-xs font-bold text-green-400">Operational</p>
+              <p className="text-xs font-medium text-slate-600">System Status</p>
+              <p className="text-xs font-semibold text-green-700">Operational</p>
             </div>
           </div>
         </div>
       </aside>
 
       {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#0B0F19]/90 backdrop-blur-xl border-b border-white/5 z-50 flex items-center justify-between px-4">
-        <span className="font-bold text-white">NEXUS AI</span>
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 z-50 flex items-center justify-between px-4 shadow-sm">
+        <span className="font-bold text-slate-900">NEXUS AI</span>
         {/* Mobile menu button would go here */}
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 min-h-screen p-4 md:p-8 pt-20 md:pt-8">
+      <main className="flex-1 md:ml-64 min-h-screen p-4 md:p-8 pt-20 md:pt-8 bg-slate-50">
         <Outlet />
       </main>
     </div>

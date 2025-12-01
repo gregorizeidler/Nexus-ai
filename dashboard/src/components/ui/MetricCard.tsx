@@ -23,24 +23,37 @@ export const MetricCard = ({
   trendUp,
   delay = 0 
 }: MetricCardProps) => {
+  const colorMap: Record<string, string> = {
+    'text-blue-400': 'bg-blue-50 text-blue-600',
+    'text-yellow-400': 'bg-yellow-50 text-yellow-600',
+    'text-red-400': 'bg-red-50 text-red-600',
+    'text-green-400': 'bg-green-50 text-green-600',
+  };
+  
+  const iconBg = colorMap[color] || 'bg-slate-50 text-slate-600';
+
   return (
     <GlassCard delay={delay} className="relative overflow-hidden group">
-      <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${bgGradient} blur-3xl opacity-50 -mr-10 -mt-10 transition-opacity group-hover:opacity-70`} />
-      
       <div className="relative flex items-start justify-between mb-4">
-        <div className={`p-3 rounded-xl bg-white/5 border border-white/5 ${color}`}>
+        <div className={`p-3 rounded-lg ${iconBg} shadow-sm`}>
           <Icon className="w-6 h-6" />
         </div>
         {trend && (
-          <div className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full border ${trendUp ? 'bg-green-500/10 border-green-500/20 text-green-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
-            {trendUp ? '↑' : '↓'} {trend}
+          <div className={`flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${
+            trendUp === true 
+              ? 'bg-green-50 text-green-700 border border-green-200' 
+              : trendUp === false
+              ? 'bg-red-50 text-red-700 border border-red-200'
+              : 'bg-slate-50 text-slate-700 border border-slate-200'
+          }`}>
+            {trendUp === true ? '↑' : trendUp === false ? '↓' : ''} {trend}
           </div>
         )}
       </div>
 
       <div>
-        <h3 className="text-slate-400 text-sm font-medium mb-1">{name}</h3>
-        <div className="text-2xl font-bold text-white tracking-tight">
+        <h3 className="text-slate-600 text-sm font-medium mb-1">{name}</h3>
+        <div className="text-3xl font-bold text-slate-900 tracking-tight">
           {value}
         </div>
       </div>
