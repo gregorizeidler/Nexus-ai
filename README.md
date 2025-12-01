@@ -83,6 +83,12 @@
 
 ## 🎯 Overview
 
+<div align="center">
+
+![NEXUS AI Feature Overview](docs/images/nexus-feature-diagram.png)
+
+</div>
+
 **NEXUS AI** is the most advanced artificial intelligence platform for financial crime detection and money laundering, combining:
 
 ### 🎯 **Core Features (100% Implemented)**
@@ -4568,6 +4574,12 @@ python scripts/process_batch.py --file data/raw/synthetic_transactions.json
 ---
 
 ## 🎨 Dashboard React
+
+<div align="center">
+
+![NEXUS AI Dashboard Overview](docs/images/nexus-dashboard-overview.png)
+
+</div>
 
 ### Available Screens
 
