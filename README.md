@@ -199,12 +199,6 @@ graph TB
 
 ## 🏗️ System Architecture
 
-<div align="center">
-
-![NEXUS AI System Architecture](docs/images/nexus-architecture-diagram.png)
-
-</div>
-
 ### High-Level Architecture
 
 ```mermaid
@@ -4574,12 +4568,6 @@ python scripts/process_batch.py --file data/raw/synthetic_transactions.json
 ---
 
 ## 🎨 Dashboard React
-
-<div align="center">
-
-![NEXUS AI Dashboard Overview](docs/images/nexus-dashboard-overview.png)
-
-</div>
 
 ### Available Screens
 
